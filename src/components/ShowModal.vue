@@ -1,27 +1,29 @@
 <template>
-    <div class="showModal">
-        <div class="showBox">
-            <div class="cont-title">
-                <p class="title">{{Store_showModal.title}}</p>
-                <p class="content">{{Store_showModal.content}}</p>
-            </div>
-            <div class="btn">
-                <span class="cancel" 
-                v-if="Store_showModal.cancelFlag"
-                @click="cancel">
-                {{Store_showModal.cancelBtn}}</span>
-                <span class="confirm"
-                @click="confirm"
-                >{{Store_showModal.successBtn}}</span>
+    <transition name="modalAni">
+        <div class="showModal">
+            <div class="showBox">
+                <div class="cont-title">
+                    <p class="title">{{Store_showModal.title}}</p>
+                    <p class="content">{{Store_showModal.content}}</p>
+                </div>
+                <div class="btn">
+                    <span class="cancel" 
+                    v-if="Store_showModal.cancelFlag"
+                    @click="cancel">
+                    {{Store_showModal.cancelBtn}}</span>
+                    <span class="confirm"
+                    @click="confirm"
+                    >{{Store_showModal.successBtn}}</span>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 <script>
 import {mapState,mapMutations} from 'vuex'
 export default {
     computed: {
-        ...mapState(['Store_showModal'])
+        ...mapState(['Store_showModal','Store_modalFlag'])
     },
     methods: {
         ...mapMutations(['Store_delModal']),
@@ -52,20 +54,22 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
+        border-radius: 0.18rem;
         .cont-title {
             min-height: 0.55rem;
-            padding: 0.14rem 0.24rem;
-            width: 1.92rem;
+            padding: 0.18rem 0.24rem 0.14rem 0.24rem;
+            width: 2.10rem;
             text-align: center;
             border-bottom:1px solid #e8e8e8;
             .title {
-                font-size: 0.14rem;
+                font-size: 0.19rem;
                 line-height: 0.18rem;
+                font-weight: bold;
             }
             .content {
-                font-size: 0.16rem;
-                font-weight: bold;
-                margin-top: 0.1rem;
+                font-size: 0.15rem;
+                margin-top: 0.14rem;
+                line-height: 0.20rem;
             }
         }
         .btn {
@@ -83,5 +87,14 @@ export default {
         }
 
     }
+}
+.modalAni-enter-to,.modalAni-leave {
+  opacity: 1;
+}
+.modalAni-leave-to,.modalAni-enter {
+  opacity: 0;
+}
+.modalAni-enter-active,.modalAni-leave-active {
+  transition: all .4s linear
 }
 </style>

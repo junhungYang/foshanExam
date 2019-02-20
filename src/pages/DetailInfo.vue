@@ -2,7 +2,7 @@
     <div class="detailInfo">
         <header>
             <img src="../assets/img/brand_logo.png" alt="">
-            <p>佛事市交通技工学校</p>
+            <p>佛山市交通技工学校</p>
             <p>—网约车预约补考—</p>
         </header>
         <div class="info-detail">
@@ -13,16 +13,44 @@
             <p class="person-identity">440681199209236527</p>
         </div>
         <div class="btn-group">
-            <div class="cancel">取消，选错时间了</div>
-            <div class="confirm">确定报名</div>
+            <div class="cancel" @click="navBack">取消，选错时间了</div>
+            <div class="confirm" @click="confirm">确定报名</div>
         </div>
     </div>
 </template>
 <script>
-import {Req_protocol} from '@/request/request'
+import {Req_add} from '@/request/request'
+import {mapMutations} from 'vuex'
+const MockData = {
+    time: '2019-02-16 17:00 至 21:00',
+    name: 'junxing',
+    mobile: '15218917058',
+    idCard: '440681199212061234'
+}
 export default {
     created() {
-        Req_protocol()
+    },
+    methods: {
+        ...mapMutations(['Store_showModalInit']),
+        confirm() {
+            Req_add(MockData).then(res => {
+                if(res.data.code === 0) {
+                    this.Store_showModalInit({
+                        title: '报名成功',
+                        content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车补考`
+                    })
+                }else {
+                    this.Store_showModalInit({
+                        title: '报名失败',
+                        content: res.data.msg,
+                        cancelFlag: false
+                    })
+                }
+            })
+        },
+        navBack() {
+            this.$router.push('/SignUp')
+        }
     }
 }
 </script>

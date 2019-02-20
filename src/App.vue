@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
-    <v-showModal v-show="Store_modalFlag"></v-showModal>
+      <v-showModal class="showModal" v-if="Store_modalFlag"></v-showModal>
   </div>
 </template>
 

@@ -12,7 +12,6 @@ export const store = new Vuex.Store({
     mutations: {
         // 以Store_xxxxx命名
         Store_showModalInit(state,payload) {
-            console.log(12313456)
             payload.title ? '' : payload.title = '提示'
             payload.content ? '' : payload.content = '提示内容'
             payload.successBtn ? '' : payload.successBtn = '确定'
