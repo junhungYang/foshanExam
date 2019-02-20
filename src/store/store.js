@@ -30,6 +30,7 @@ export const store = new Vuex.Store({
         },
         Store_signInfoInit(state, payload) {
           state.Store_signInfo = payload
+          console.log(state.Store_signInfo)
         },
         Store_agreeChange(state) {
             state.Store_agree = !state.Store_agree

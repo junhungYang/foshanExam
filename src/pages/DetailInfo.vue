@@ -7,10 +7,10 @@
         </header>
         <div class="info-detail">
             <p class="title">补考信息</p>
-            <p class="time">2019-02-16 17:00 至 21:00</p>
-            <p class="person-name">曾小小</p>
-            <p class="person-phone">18753632281</p>
-            <p class="person-identity">440681199209236527</p>
+            <p class="time">{{Store_signInfo.time}}</p>
+            <p class="person-name">{{Store_signInfo.name}}</p>
+            <p class="person-phone">{{Store_signInfo.mobile}}</p>
+            <p class="person-identity">{{Store_signInfo.idCard}}</p>
         </div>
         <div class="btn-group">
             <div class="cancel" @click="navBack">取消，选错时间了</div>
@@ -20,24 +20,28 @@
 </template>
 <script>
 import {Req_add} from '@/request/request'
-import {mapMutations} from 'vuex'
-const MockData = {
-    time: '2019-02-16 17:00 至 21:00',
-    name: 'junxing',
-    mobile: '15218917058',
-    idCard: '440681199212061234'
-}
+import {mapMutations,mapState} from 'vuex'
 export default {
-    created() {
+    beforeRouteEnter (to, from, next) {
+        next(vm => {
+            const { name,idCard } = vm.$store.state.Store_signInfo
+            if(!name || !idCard) {
+                vm.$router.replace('/signUp')
+            }
+        })
+    },
+    computed: {
+        ...mapState(['Store_signInfo'])
     },
     methods: {
         ...mapMutations(['Store_showModalInit']),
         confirm() {
-            Req_add(MockData).then(res => {
+            Req_add(this.Store_signInfo).then(res => {
                 if(res.data.code === 0) {
                     this.Store_showModalInit({
                         title: '报名成功',
-                        content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车补考`
+                        content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车补考`,
+                        cancelFlag: false
                     })
                 }else {
                     this.Store_showModalInit({
@@ -46,6 +50,11 @@ export default {
                         cancelFlag: false
                     })
                 }
+            }).catch(err => {
+                this.Store_showModalInit({
+                    title: '错误提示',
+                    content: err
+                })
             })
         },
         navBack() {

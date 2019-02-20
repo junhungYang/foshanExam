@@ -2,7 +2,9 @@
   <div class="signUp-wrap">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div v-for="(item, index) in banner" :key="index" class="swiper-slide" data-swiper-autoplay="5000"><img :src="item.full_pic_url" alt=""></div>
+        <div v-for="(item, index) in banner" :key="index" class="swiper-slide" data-swiper-autoplay="5000">
+          <img :src="item.full_pic_url" alt="">
+        </div>
       </div>
     </div>
     <p class="tips">佛山市交通技工学校开班了！</p>
@@ -38,16 +40,15 @@
   </div>
 </template>
 <script>
-  import {Req_protocol, Req_timeList, Req_banner} from '@/request/request'
+  import {Req_protocol, Req_timeList, Req_banner, Req_verification} from '@/request/request'
   import {mapMutations} from 'vuex'
   import Swiper from 'swiper'
   export default {
     created() {
       if (this.sign_info.name) {
         this.from = this.sign_info
-      } else {
-        this.getReq_protocol()
       }
+      this.getReq_protocol()
       this.getReq_timeList()
       this.getReq_banner()
     },
@@ -74,46 +75,60 @@
     },
     methods: {
       ...mapMutations(['Store_showModalInit']),
+
+      // 获取补考协议
       getReq_protocol() {
         Req_protocol().then(res => {
           if(res.data.code === 0) {
             this.protocol = res.data.data
-            if(!this.agree) this.watchProtocol()
+          }else {
+            this.catchError(res.data.msg)
           }
-        })
+        }).catch(err => this.catchError(err))
       },
+
+      // 获取补考时间列表
       getReq_timeList() {
         Req_timeList().then(res => {
           if(res.data.code === 0) {
             this.timeList = res.data.data
+          }else {
+            this.catchError(res.data.msg)
           }
-        })
+        }).catch(err => this.catchError(err))
       },
+
+      // 获取轮播
       getReq_banner() {
         Req_banner().then(res => {
           if(res.data.code === 0) {
             this.banner = res.data.data
+          }else {
+            this.catchError(res.data.msg)
           }
           this.$nextTick(() => {
             this.bannerInit()
           })
-        })
+        }).catch(err => this.catchError(err))
       },
+
+      // 协议展示
       watchProtocol() {
         this.Store_showModalInit({
           title: '网约车补考协议',
           content: this.protocol,
-          successCB: () => {
-            this.agreeChange()
-          }
+          cancelFlag: false
         })
       },
+
+      // 前端校验
       submit() {
         for(let item in this.from) {
           if (this.from[item] === '') {
             this.Store_showModalInit({
-              title: '提示',
-              content: '请先完善信息'
+              title: '核对失败',
+              content: '填写信息有误或未勾选协议',
+              cancelFlag: false
             })
             return false
           }
@@ -121,24 +136,55 @@
         if(!this.agree) {
           this.Store_showModalInit({
             title: '提示',
-            content: '清楚了解并同意网约车补考协议才可报名'
+            content: '清楚了解并同意网约车补考协议才可报名',
+            cancelFlag: false
           })
           return false
         }
-        this.$store.commit('Store_signInfoInit', this.from)
-        this.$router.push('/DetailInfo')
+        this.postReq_verification()
       },
+
+      // 发送请求核对信息并回显
+      postReq_verification() {
+        Req_verification(this.from).then(res => {
+          if(res.data.code === 0) {
+            const {detail_time,id_card,mobile,name} = res.data.data
+            this.form = {
+              time: detail_time,
+              idCard: id_card,
+              mobile,
+              name
+            }
+            this.$store.commit('Store_signInfoInit', this.form)
+            this.$router.push('/DetailInfo')
+          }else {
+            this.catchError(res.data.msg)  
+          }
+        }).catch(err => this.catchError(err))
+      },
+
+      // 是否同意协议管理
       agreeChange() {
         this.$store.commit('Store_agreeChange')
       },
+
+      // 初始化轮播
       bannerInit() {
         new Swiper('.swiper-container', {
           loop: true,
           autoplay: true
         })
-      }
-    },
-    mounted() {
+      },
+
+      // 错误捉取
+      catchError(msg,title="错误提示") {
+        this.Store_showModalInit({
+          title,
+          content: msg,
+          cancelFlag: false
+        })
+      },
+
     }
   }
 </script>
@@ -148,32 +194,44 @@
     width: 100%;
     min-height: 100vh;
     .swiper-container{
-      width: 100%;
-      height: 1.53rem;
-      img{
-        width: 100%;
+      width: 3.16rem !important;
+      overflow: visible;
+      height: 1.79rem;
+      .swiper-wrapper {
+        width: 3.16rem !important;
+        .swiper-slide {
+          width: 3.16rem !important;
+          padding: 0 0.03rem;
+          box-sizing: border-box;
+          img{
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 1px 2px 0 rgba(196,195,195,1)
+          }
+          // background:red;
+        }
       }
     }
     .tips{
-      padding: 0.1rem 0.25rem;
-      font-size: 0.13rem;
+      padding: 0.14rem 0.29rem;
+      font-size: 0.15rem;
       background: #f9f8f8;
     }
     .title{
       color: #2d74c6;
-      font-size: 0.15rem;
+      font-size: 0.16rem;
       font-weight: bold;
-      line-height: 0.51rem;
+      line-height: 0.62rem;
       text-align: center;
     }
     .info-item{
-      width:3.04rem;
-      height:0.28rem;
-      line-height: 0.28rem;
+      width:3.56rem;
+      height:0.32rem;
+      line-height: 0.32rem;
       background:rgba(255,255,255,1);
       border:1px solid rgba(142,142,142,1);
-      font-size: 0.12rem;
-      margin: 0 auto 0.2rem;
+      font-size: 0.14rem;
+      margin: 0 auto 0.23rem;
       display: flex;
       align-items: center;
       &>select{
@@ -183,52 +241,60 @@
         padding-left: 0.44rem;
       }
       .img-wrap{
-        width: 0.34rem;
-        height: 0.28rem;
-        text-align: center;
+        width: 0.40rem;
+        height: 100%;
+        position: relative;
+        img {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+        }
         .user-i{
-          width: 0.12rem;
+          width: 0.14rem;
         }
         .phone-i{
-          width: 0.07rem;
+          width: 0.08rem;
         }
         .card-i{
-          width: 0.14rem;
+          width: 0.16rem;
         }
       }
       &>input{
         flex: 1;
-        height: 0.17rem;
+        height: 100%;
+        line-height: 0.32rem;
         border: none;
         border-left: 1px solid rgba(142,142,142,1);
         padding-left: 0.1rem;
+        background-color: transparent;
       }
     }
     .btn{
-      width:1.43rem;
-      height:0.35rem;
+      width:1.68rem;
+      height:0.41rem;
       background:rgba(45,116,198,1);
-      margin: 0 auto 0.2rem;
-      font-size:0.12rem;
+      margin: 0 auto 0.22rem;
+      font-size:0.14rem;
       font-weight:bold;
       color:rgba(255,255,255,1);
-      line-height:0.35rem;
+      line-height:0.41rem;
       text-align: center;
     }
     .protocol{
       text-align: center;
-      font-size:0.12rem;
+      font-size:0.14rem;
       font-weight:bold;
       color:rgba(142,142,142,1);
       .check{
         display: inline-block;
-        width: 0.16rem;
-        height: 0.16rem;
+        width: 0.18rem;
+        height: 0.18rem;
         border-radius: 50%;
         background: url("../assets/img/check.png") center no-repeat;
         background-size: 100% 100%;
         vertical-align: top;
-        margin-right: 0.05rem;
+        margin-right: 0.06rem;
       }
       .checked{
         background-image: url("../assets/img/checked_03.jpg");
