@@ -19,9 +19,14 @@ const Req_add = function(data) {
     return axios.post(`${GlobalUrl}/record/add`,qs.stringify(data))
 }
 
+const Req_banner = function(data) {
+  return axios.get(`${GlobalUrl}/record/index`)
+}
+
 export {
     Req_protocol,
     Req_timeList,
     Req_verification,
+    Req_banner,
     Req_add
 }

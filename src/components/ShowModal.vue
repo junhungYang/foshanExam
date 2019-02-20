@@ -55,6 +55,7 @@ export default {
         top: 50%;
         transform: translate(-50%,-50%);
         border-radius: 0.18rem;
+        max-height: 4rem;
         .cont-title {
             min-height: 0.55rem;
             padding: 0.18rem 0.24rem 0.14rem 0.24rem;
@@ -70,6 +71,9 @@ export default {
                 font-size: 0.15rem;
                 margin-top: 0.14rem;
                 line-height: 0.20rem;
+                max-height: 2.5rem;
+                overflow: hidden;
+                overflow-y: scroll;
             }
         }
         .btn {

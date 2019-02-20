@@ -8,6 +8,8 @@ export const store = new Vuex.Store({
         // 以Store_xxxxx命名
         Store_showModal: {},
         Store_modalFlag: false,
+        Store_signInfo: {},
+        Store_agree: false,
     },
     mutations: {
         // 以Store_xxxxx命名
@@ -26,5 +28,11 @@ export const store = new Vuex.Store({
             state.Store_modalFlag = false
             state.Store_showModal = {}
         },
+        Store_signInfoInit(state, payload) {
+          state.Store_signInfo = payload
+        },
+        Store_agreeChange(state) {
+            state.Store_agree = !state.Store_agree
+        }
     }
 })
