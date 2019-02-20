@@ -26,7 +26,7 @@ export default {
     }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .detailInfo {
     header {
         padding-top: 0.23rem;
