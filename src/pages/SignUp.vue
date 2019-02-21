@@ -1,9 +1,11 @@
 <template>
   <div class="signUp-wrap">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div v-for="(item, index) in banner" :key="index" class="swiper-slide" data-swiper-autoplay="5000">
-          <img :src="item.full_pic_url" alt="">
+    <div class="banner">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div v-for="(item, index) in banner" :key="index" class="swiper-slide">
+            <img :src="item.full_pic_url" alt="">
+          </div>
         </div>
       </div>
     </div>
@@ -172,7 +174,10 @@
       bannerInit() {
         new Swiper('.swiper-container', {
           loop: true,
-          autoplay: true
+          autoplay: {
+            disableOnInteraction: false,
+            delay: 5000,
+          },
         })
       },
 
@@ -193,6 +198,10 @@
     display: inline-block;
     width: 100%;
     min-height: 100vh;
+    .banner{
+      width: 100%;
+      overflow: hidden;
+    }
     .swiper-container{
       width: 3.16rem !important;
       overflow: visible;
