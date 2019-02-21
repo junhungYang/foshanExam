@@ -292,21 +292,23 @@
     }
     .protocol{
       text-align: center;
-      font-size:0.14rem;
+      font-size:0.15rem;
       font-weight:bold;
       color:rgba(142,142,142,1);
       .check{
         display: inline-block;
-        width: 0.18rem;
-        height: 0.18rem;
-        border-radius: 50%;
+        width: 0.30rem;
+        height: 0.30rem;
+        border-radius: 100%;
         background: url("../assets/img/check.png") center no-repeat;
+        vertical-align: middle;
         background-size: 100% 100%;
-        vertical-align: top;
-        margin-right: 0.06rem;
+        // margin-right: 0.06rem;
+        transform: scale(.5);
+        transform-origin: center center;
       }
       .checked{
-        background-image: url("../assets/img/checked_03.jpg");
+        background-image: url("../assets/img/checked_03.png");
       }
     }
     .link{

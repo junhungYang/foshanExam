@@ -6,11 +6,14 @@
             <p>—网约车预约补考—</p>
         </header>
         <div class="info-detail">
-            <p class="title">补考信息</p>
-            <p class="time">{{Store_signInfo.time}}</p>
-            <p class="person-name">{{Store_signInfo.name}}</p>
-            <p class="person-phone">{{Store_signInfo.mobile}}</p>
-            <p class="person-identity">{{Store_signInfo.idCard}}</p>
+            <img src="../assets/img/info_bg.png" alt="" srcset="">
+            <div class="text">
+                 <p class="title">补考信息</p>
+                <p class="time">{{Store_signInfo.time}}</p>
+                <p class="person-name">{{Store_signInfo.name}}</p>
+                <p class="person-phone">{{Store_signInfo.mobile}}</p>
+                <p class="person-identity">{{Store_signInfo.idCard}}</p>
+            </div>
         </div>
         <div class="btn-group">
             <div class="cancel" @click="navBack">取消，选错时间了</div>
@@ -65,6 +68,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .detailInfo {
+    min-height: 100vh; 
+    background: #fff;
     header {
         padding-top: 0.23rem;
         img {
@@ -91,19 +96,28 @@ export default {
         margin-top: 0.35rem;
         width: 3.28rem;
         height: 2.15rem;
-        background: url('../assets/img/info_bg.png');
-        background-size: cover;
         overflow: hidden;
-        p {
-            margin-top: 0.22rem;
-            font-size: 0.14rem;
-            text-align: center;
-            color: #252525;
+        position: relative;
+        img {
+            width: 100%;
+            height: 100%;
         }
-        p:first-of-type {
-            color: #2d74c6;
-            font-size: 0.18rem;
-            font-weight: bold;
+        .text {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            p {
+                margin-top: 0.22rem;
+                font-size: 0.14rem;
+                text-align: center;
+                color: #252525;
+            }
+            p:first-of-type {
+                color: #2d74c6;
+                font-size: 0.18rem;
+                font-weight: bold;
+            }
         }
     }
     .btn-group {
