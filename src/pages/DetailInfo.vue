@@ -79,7 +79,6 @@ export default {
         }
         p {
             text-align: center;
-            white-space: nowrap;
         }
         p:first-of-type {
             margin-top: 0.16rem;
@@ -109,6 +108,7 @@ export default {
             transform: translateX(-50%);
             top: 0;
             p {
+                white-space: nowrap;
                 margin-top: 0.22rem;
                 font-size: 0.14rem;
                 text-align: center;
