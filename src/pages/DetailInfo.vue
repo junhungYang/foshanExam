@@ -79,6 +79,7 @@ export default {
         }
         p {
             text-align: center;
+            white-space: nowrap;
         }
         p:first-of-type {
             margin-top: 0.16rem;
