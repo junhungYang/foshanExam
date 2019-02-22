@@ -3,12 +3,12 @@
         <header>
             <img src="../assets/img/brand_logo.png" alt="">
             <p>佛山市交通技工学校</p>
-            <p>—网约车预约补考—</p>
+            <p>—网约车预约报考—</p>
         </header>
         <div class="info-detail">
             <img src="../assets/img/info_bg.png" alt="" srcset="">
             <div class="text">
-                 <p class="title">补考信息</p>
+                 <p class="title">报考信息</p>
                 <p class="time">{{Store_signInfo.time}}</p>
                 <p class="person-name">{{Store_signInfo.name}}</p>
                 <p class="person-phone">{{Store_signInfo.mobile}}</p>
@@ -43,7 +43,7 @@ export default {
                 if(res.data.code === 0) {
                     this.Store_showModalInit({
                         title: '报名成功',
-                        content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车补考`,
+                        content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车报考`,
                         cancelFlag: false
                     })
                 }else {

@@ -10,10 +10,10 @@
       </div>
     </div>
     <p class="tips">佛山市交通技工学校开班了！</p>
-    <p class="title">— 网约车预约补考 —</p>
+    <p class="title">— 网约车预约报考 —</p>
     <div class="info-item">
       <select v-model="from.time">
-        <option value="">请选择补考时间段</option>
+        <option value="">请选择报考时间段</option>
         <option v-for="item, index in timeList" :value="item">{{item}}</option>
       </select>
     </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="btn" @click="submit">核对报名人信息</div>
     <p class="protocol">
-      <span :class="{'checked': agree}" class="check" @click="agreeChange"></span>我已清楚了解<span class="link" @click="watchProtocol">《网约车补考协议》</span>
+      <span :class="{'checked': agree}" class="check" @click="agreeChange"></span>我已清楚了解<span class="link" @click="watchProtocol">《网约车报考协议》</span>
     </p>
   </div>
 </template>
@@ -117,7 +117,7 @@
       // 协议展示
       watchProtocol() {
         this.Store_showModalInit({
-          title: '网约车补考协议',
+          title: '网约车报考协议',
           content: this.protocol,
           cancelFlag: false
         })
