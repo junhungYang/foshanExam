@@ -17,12 +17,12 @@
                 <span>预约报考时间</span>
             </div>
             <ul class="map-list" v-if="showStatus === 0">
-                <li>
-                    <p>{{recordInfo.create_time.split(' ')[0]}}</p>
-                    <p>{{recordInfo.name}}</p>
+                <li v-for="item in recordInfo" :key="item.id">
+                    <p>{{item.create_time.split(' ')[0]}}</p>
+                    <p>{{item.name}}</p>
                     <p>
-                        <span>{{recordInfo.detail_time.slice(0,10)}}</span>
-                        <span>{{recordInfo.detail_time.slice(11)}}</span>
+                        <span>{{item.detail_time.slice(0,10)}}</span>
+                        <span>{{item.detail_time.slice(11)}}</span>
                     </p>
                 </li>
             </ul>
@@ -44,13 +44,14 @@ export default {
     data() {
         return {
             showStatus: 1,
-            recordInfo: null,
+            recordInfo: [],
             inpVal: ''
         }
     },
     created() {
-        if(localStorage.getItem('record')) {
-            this.inpVal = JSON.parse(localStorage.getItem('record')).id_card
+        const recordInfo = JSON.parse(localStorage.getItem('record'))
+        if(recordInfo && recordInfo.length > 0) {
+            this.inpVal = JSON.parse(localStorage.getItem('record'))[0].id_card
             this.search()
         }
     },

@@ -44,6 +44,7 @@ export default {
                     this.Store_showModalInit({
                         title: '报名成功',
                         content: `您已成功报名预约时间段为${res.data.data.detail_time}的网约车报考`,
+                        successCB: () => {this.$router.push('/signUp')},
                         cancelFlag: false
                     })
                 }else {
