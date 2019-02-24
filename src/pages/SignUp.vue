@@ -10,7 +10,13 @@
       </div>
     </div>
     <p class="tips">佛山市交通技工学校开班了！</p>
-    <p class="title">— 网约车预约报考 —</p>
+    <div class="title">
+      <p class="text">— 网约车预约报考 —</p>
+      <p class="search" @click="navToRecordSearch">
+        <img src="../assets/img/search.png" alt="">
+        <span>预约查询</span>
+      </p>
+    </div>
     <div class="info-item">
       <select v-model="from.time">
         <option value="">请选择报考时间段</option>
@@ -77,6 +83,11 @@
     },
     methods: {
       ...mapMutations(['Store_showModalInit']),
+
+      // 跳转至报名查询页
+      navToRecordSearch() {
+        this.$router.push('/RecordSearch')
+      },
 
       // 获取补考协议
       getReq_protocol() {
@@ -227,11 +238,32 @@
       background: #f9f8f8;
     }
     .title{
-      color: #2d74c6;
-      font-size: 0.16rem;
-      font-weight: bold;
-      line-height: 0.62rem;
-      text-align: center;
+      height: 0.62rem;
+      position: relative;
+      .text {
+        color: #2d74c6;
+        font-size: 0.16rem;
+        font-weight: bold;
+        line-height: 0.62rem;
+        text-align: center;
+      }
+      .search {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0.09rem;
+        img {
+          display: block;
+          width: 0.16rem;
+          margin: 0 auto;
+        }
+        span {
+          display: block;
+          font-size: 0.12rem;
+          color: rgb(45,116,198);
+          margin-top: 0.06rem;
+        }
+      }
     }
     .info-item{
       width:3.56rem;

@@ -23,10 +23,16 @@ const Req_banner = function(data) {
   return axios.get(`${GlobalUrl}/record/index`)
 }
 
+const Req_getRecord = function(data) {
+    console.log(data)
+    return axios.post(`${GlobalUrl}/record/check`,qs.stringify(data))
+}
+
 export {
     Req_protocol,
     Req_timeList,
     Req_verification,
     Req_banner,
-    Req_add
+    Req_add,
+    Req_getRecord
 }
