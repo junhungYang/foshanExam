@@ -3,7 +3,7 @@
         <header>
             <img src="../assets/img/brand_logo.png" alt="">
             <p>佛山市交通技工学校</p>
-            <p>—网约车预约报考—</p>
+            <p>—网约车预约补考—</p>
         </header>
         <div class="search-input">
             <img src="../assets/img/search.png" alt="">
@@ -14,7 +14,7 @@
             <div class="map-head">
                 <span>报名时间</span>
                 <span>报名人姓名</span>
-                <span>预约报考时间</span>
+                <span>预约补考时间</span>
             </div>
             <ul class="map-list" v-if="showStatus === 0">
                 <li v-for="item in recordInfo" :key="item.id">

@@ -11,15 +11,15 @@
     </div>
     <p class="tips">佛山市交通技工学校开班了！</p>
     <div class="title">
-      <p class="text">— 网约车预约报考 —</p>
+      <p class="text">— 网约车预约补考 —</p>
       <p class="search" @click="navToRecordSearch">
         <img src="../assets/img/search.png" alt="">
-        <span>预约查询</span>
+        <span>我的预约</span>
       </p>
     </div>
     <div class="info-item">
       <select v-model="from.time">
-        <option value="">请选择报考时间段</option>
+        <option value="">请选择补考日期场次</option>
         <option v-for="item, index in timeList" :value="item">{{item}}</option>
       </select>
     </div>
@@ -43,7 +43,7 @@
     </div>
     <div class="btn" @click="submit">核对报名人信息</div>
     <p class="protocol">
-      <span :class="{'checked': agree}" class="check" @click="agreeChange"></span>我已清楚了解<span class="link" @click="watchProtocol">《网约车报考协议》</span>
+      <span :class="{'checked': agree}" class="check" @click="agreeChange"></span>我已清楚了解<span class="link" @click="watchProtocol">《网约车补考协议》</span>
     </p>
   </div>
 </template>
@@ -116,6 +116,7 @@
         Req_banner().then(res => {
           if(res.data.code === 0) {
             this.banner = res.data.data
+            console.log(this.banner)
           }else {
             this.catchError(res.data.msg)
           }
@@ -128,7 +129,7 @@
       // 协议展示
       watchProtocol() {
         this.Store_showModalInit({
-          title: '网约车报考协议',
+          title: '网约车补考协议',
           content: this.protocol,
           cancelFlag: false
         })
@@ -212,21 +213,16 @@
     .banner{
       width: 100%;
       overflow: hidden;
+      background: #f9f8f8;
     }
     .swiper-container{
-      width: 3.16rem !important;
       overflow: visible;
       height: 1.79rem;
       .swiper-wrapper {
-        width: 3.16rem !important;
         .swiper-slide {
-          width: 3.16rem !important;
-          padding: 0 0.03rem;
-          box-sizing: border-box;
           img{
             width: 100%;
             height: 100%;
-            box-shadow: 0 1px 2px 0 rgba(196,195,195,1)
           }
           // background:red;
         }
