@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <p class="tips">佛山市交通技工学校开班了！</p>
+    <p class="tips" v-if="text">{{text}}</p>
     <div class="title">
       <p class="text">— 网约车预约补考 —</p>
       <p class="search" @click="navToRecordSearch">
@@ -70,7 +70,9 @@
         },
         protocol: '',
         timeList: [],
-        banner: []
+        banner: [],
+        text: '',
+        mySwiper: null
       }
     },
     computed: {
@@ -116,7 +118,8 @@
         Req_banner().then(res => {
           if(res.data.code === 0) {
             this.banner = res.data.data
-            console.log(this.banner)
+            // this.text = this.banner[0].text
+            // console.log(this.banner)
           }else {
             this.catchError(res.data.msg)
           }
@@ -131,7 +134,8 @@
         this.Store_showModalInit({
           title: '网约车补考协议',
           content: this.protocol,
-          cancelFlag: false
+          cancelFlag: false,
+          isHtml: true
         })
       },
 
@@ -184,7 +188,13 @@
 
       // 初始化轮播
       bannerInit() {
-        new Swiper('.swiper-container', {
+        let that = this
+        this.mySwiper = new Swiper('.swiper-container', {
+          on: {
+            slideChangeTransitionEnd: function(){
+              that.text = that.banner[this.realIndex].text
+            },
+          },
           loop: true,
           autoplay: {
             disableOnInteraction: false,

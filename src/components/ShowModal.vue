@@ -4,7 +4,8 @@
             <div class="showBox">
                 <div class="cont-title">
                     <p class="title">{{Store_showModal.title}}</p>
-                    <p class="content">{{Store_showModal.content}}</p>
+                    <p class="content text-left" v-if="Store_showModal.isHtml" v-html="Store_showModal.content"></p>
+                    <p class="content" v-else>{{Store_showModal.content}}</p>
                 </div>
                 <div class="btn">
                     <span class="cancel" 
@@ -75,6 +76,9 @@ export default {
                 overflow: hidden;
                 overflow-y: scroll;
             }
+          .text-left{
+            text-align: left;
+          }
         }
         .btn {
             display: flex;

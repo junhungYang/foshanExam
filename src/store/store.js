@@ -14,10 +14,12 @@ export const store = new Vuex.Store({
     mutations: {
         // 以Store_xxxxx命名
         Store_showModalInit(state,payload) {
+          // payload.isHtml  bool 判断传入的是否是富文本
             payload.title ? '' : payload.title = '提示'
             payload.content ? '' : payload.content = '提示内容'
             payload.successBtn ? '' : payload.successBtn = '确定'
             payload.cancelBtn ? '' : payload.cancelBtn = '取消'
+            payload.isHtml ? '' : payload.isHtml = false
             payload.successCB ? '' : payload.successCB = function() {}
             payload.cancelCB ? '' : payload.cancelCB = function() {}
             payload.cancelFlag === false ? '' : payload.cancelFlag = true
