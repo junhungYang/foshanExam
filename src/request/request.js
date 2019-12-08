@@ -24,8 +24,16 @@ const Req_banner = function(data) {
 }
 
 const Req_getRecord = function(data) {
-    console.log(data)
     return axios.post(`${GlobalUrl}/record/check`,qs.stringify(data))
+}
+
+const Req_SetWxConfig = function () {
+    const data = {url : 'http://jtjxbk.ydcycloud.com/dist/index.html'}
+    return axios.post(`${GlobalUrl}/wx/config`,qs.stringify(data))
+}
+
+const Req_Pay = function (data) {
+    return axios.post(`${GlobalUrl}/pay`,qs.stringify(data))
 }
 
 export {
@@ -34,5 +42,7 @@ export {
     Req_verification,
     Req_banner,
     Req_add,
-    Req_getRecord
+    Req_getRecord,
+    Req_SetWxConfig,
+    Req_Pay
 }

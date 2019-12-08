@@ -170,9 +170,9 @@
               name
             }
             this.$store.commit('Store_signInfoInit', this.form)
-            this.$router.push('/DetailInfo')
+            this.$router.push('/detailInfo')
           }else {
-            this.catchError(res.data.msg)  
+            this.catchError(res.data.msg,'约考失败')  
           }
         }).catch(err => this.catchError(err))
       },
@@ -194,7 +194,7 @@
       },
 
       // 错误捉取
-      catchError(msg,title="错误提示") {
+      catchError(msg,title="提示") {
         this.Store_showModalInit({
           title,
           content: msg,

@@ -62,6 +62,7 @@ export default {
             width: 2.10rem;
             text-align: center;
             border-bottom:1px solid #e8e8e8;
+            color: rgb(196, 29, 7);
             .title {
                 font-size: 0.19rem;
                 line-height: 0.18rem;
