@@ -38,11 +38,9 @@ export default {
     const signInfo = localStorage.getItem('signInfo')
     const query = this.$route.query
     if(query.needToPay == 1 && query.isAuth == 1 && query.reservationId && signInfo) {
-      this.$store.commit('Store_signInfoInit', signInfo)
+      this.$store.commit('Store_signInfoInit', JSON.parse(signInfo))
       this.pay(query.reservationId)
-    } else {
-      // this.$router.replace('/')
-    }
+    } 
   },
   methods: {
     ...mapMutations(["Store_showModalInit"]),
@@ -50,8 +48,8 @@ export default {
       Req_add(this.Store_signInfo)
         .then(res => {
           if (res.data.code === 0) {
-              this.info = res.data.data
-              const {need_to_pay, is_auth, id} = this.info
+            this.info = res.data.data
+            const {need_to_pay, is_auth, id} = this.info
             if(need_to_pay) {
               if(is_auth === 1) {
                   // 唤起支付接口
@@ -61,14 +59,13 @@ export default {
                   title: '提示',
                   content: '授权后才能发起支付，点击确定进行授权',
                   successCB: () => {
-                      location.href = `http://jtjxbk.ydcycloud.com/wx/toOauth?state=${id}`
-                      localStorage.setItem('signInfo',this.Store_signInfo)
-                    }  
+                    localStorage.setItem('signInfo',JSON.stringify(this.Store_signInfo))
+                    location.href = `http://jtjxbk.ydcycloud.com/wx/toOauth?state=${id}`
+                  }  
                 })  
               }
             }else {
-              this.pay(id)
-              // this.showSucModel();
+              this.showSucModal();
             }
           } else {
             this.Store_showModalInit({
@@ -88,13 +85,15 @@ export default {
     pay(reservationId) {
       Req_Pay({reservationId}).then(res => {
         if(res.data.code === 0) {
+          const data = res.data.data
           wx.chooseWXPay({
-            ...res.data.data,
+            ...data,
+            timestamp: data.timeStamp,
             success:() => {
-              this.Store_showModalInit({
-                title: '报名成功',
-                content: '已支付完成',
-              })
+              this.showSucModal()
+            },
+            fail: (res) => {
+              alert(JSON.stringify(res))
             }  
           })
         }else {
@@ -115,6 +114,7 @@ export default {
       this.$router.push("/SignUp");
     },
     showSucModal() {
+      localStorage.removeItem('signInfo')
       this.Store_showModalInit({
         title: "报名成功",
         content: `您已成功报名预约时间段为${
